@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<install product="q3-sdk" desc="Quake III Arena mod SDK" version="$1" nouninstall="yes" express="no" nobinaries="yes" postinstall="sh setup.data/postinstall.sh">
+  <eula>
+   license.txt
+  </eula>
+  <option install="true" required="true">
+    SDK files
+    <help>VM tools and game source</help>
+    <files>
+      code/
+      lcc/
+      q3asm/
+      ui/
+    </files>
+  </option>
+</install>
