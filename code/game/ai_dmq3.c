@@ -4156,10 +4156,10 @@ int BotGetActivateGoal(bot_state_t *bs, int entitynum, bot_activategoal_t *activ
 		return 0;
 	}
 	trap_AAS_ValueForBSPEpairKey(ent, "classname", classname, sizeof(classname));
-/*	if (classname) {
+	if (classname[0]) {
 		BotAI_Print(PRT_ERROR, "BotGetActivateGoal: entity with model %s has no classname\n", model);
 		return 0;
-	}*/
+	}
 	//if it is a door
 	if (!strcmp(classname, "func_door")) {
 		if (trap_AAS_FloatForBSPEpairKey(ent, "health", &health)) {
