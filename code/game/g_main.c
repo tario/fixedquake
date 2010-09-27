@@ -4,6 +4,7 @@
 #include "g_local.h"
 #include "quakeruby.h"
 
+
 level_locals_t	level;
 
 typedef struct {

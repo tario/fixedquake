@@ -273,7 +273,7 @@ sub showcom {
      'unix' => [
 		'CC'             => 'cc',
 		'CFLAGS'         => '',
-		'CCCOM'          => '%CC %CFLAGS %_IFLAGS -c %< -o %>',
+		'CCCOM'          => '%CC -D QUAKERUBY -I/usr/lib/ruby/1.8/x86_64-linux %CFLAGS %_IFLAGS -c %< -o %>',
 		'CXX'            => '%CC',
 		'CXXFLAGS'       => '%CFLAGS',
 		'CXXCOM'         => '%CXX %CXXFLAGS %_IFLAGS -c %< -o %>',
@@ -2037,6 +2037,7 @@ package action::command::win32;
 
 sub do_command {
     my($class, $com, $path) = @_;
+
     system($com);
     if ($?) {
 	my ($b0, $b1) = ($? & 0xFF, $? >> 8);
