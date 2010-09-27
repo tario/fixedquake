@@ -52,6 +52,47 @@ $vm_ta_env = new cons(%vm_ta_env_hash);
 
 # the file with vmMain function MUST be the first one of the list
 @FILES = qw(
+ruby/array.c
+ruby/bignum.c
+ruby/class.c
+ruby/compar.c
+ruby/dir.c
+ruby/dln.c
+ruby/dmydln.c
+ruby/dmyext.c
+ruby/enum.c
+ruby/enumerator.c
+ruby/error.c
+ruby/eval.c
+ruby/file.c
+ruby/gc.c
+ruby/hash.c
+ruby/inits.c
+ruby/io.c
+ruby/lex.c
+ruby/main.c
+ruby/marshal.c
+ruby/math.c
+ruby/numeric.c
+ruby/object.c
+ruby/pack.c
+ruby/parse.c
+ruby/prec.c
+ruby/process.c
+ruby/random.c
+ruby/range.c
+ruby/re.c
+ruby/regex.c
+ruby/ruby.c
+ruby/signal.c
+ruby/sprintf.c
+ruby/st.c
+ruby/string.c
+ruby/struct.c
+ruby/time.c
+ruby/util.c
+ruby/variable.c
+ruby/version.c
   g_main.c
   ai_chat.c
   ai_cmd.c
