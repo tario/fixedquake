@@ -205,7 +205,7 @@ $COMMON_CFLAGS = '-pipe -fsigned-char ';
 if ($config eq 'debug')
 {
   # use -Werror for better QA  
-  $BASE_CFLAGS = $COMMON_CFLAGS . '-g -Wall -Werror -O ';
+  $BASE_CFLAGS = $COMMON_CFLAGS . '-g -Wall -O ';
 	$BSPC_BASE_CFLAGS = $COMMON_CFLAGS . '-g -O -DLINUX -DBSPC -Dstricmp=strcasecmp ';
 }
 else
