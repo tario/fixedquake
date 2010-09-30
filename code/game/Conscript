@@ -69,7 +69,6 @@ ruby/gc.c
 ruby/hash.c
 ruby/inits.c
 ruby/io.c
-ruby/lex.c
 ruby/main.c
 ruby/marshal.c
 ruby/math.c
