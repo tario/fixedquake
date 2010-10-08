@@ -88,11 +88,11 @@ typedef unsigned long ID;
 #endif
 
 #ifdef __STDC__
-# include <limits.h>
+# include "q_limits.h"
 #else
 # ifndef LONG_MAX
 #  ifdef HAVE_LIMITS_H
-#   include <limits.h>
+#   include "q_limits.h"
 #  else
     /* assuming 32bit(2's compliment) long */
 #   define LONG_MAX 2147483647
