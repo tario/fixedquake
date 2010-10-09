@@ -18,6 +18,9 @@
 #include "node.h"
 #include "env.h"
 #include "re.h"
+
+#ifdef Q3_VM
+
 #include <stdio.h>
 #include <setjmp.h>
 #include <sys/types.h>
@@ -32,6 +35,12 @@
 
 #if defined _WIN32 || defined __CYGWIN__
 #include <windows.h>
+#endif
+
+#else
+
+#include "q_setjmp.h"
+
 #endif
 
 void re_free_registers _((struct re_registers*));
