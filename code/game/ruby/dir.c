@@ -20,8 +20,6 @@
 #include "q_dir.h"
 #include "q_errno.h"
 
-int errno;
-
 #define NULL 0
 
 #else
