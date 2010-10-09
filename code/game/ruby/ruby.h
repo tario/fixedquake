@@ -700,13 +700,7 @@ RUBY_EXTERN VALUE rb_eLoadError;
 RUBY_EXTERN VALUE rb_stdin, rb_stdout, rb_stderr;
 RUBY_EXTERN VALUE ruby_errinfo;
 
-#ifdef Q3_VM
-#define Q_STATIC
-#define Q_INLINE
-#else
-#define Q_STATIC static
-#define Q_INLINE inline
-#endif
+#include "q_fake.h"
 
 #if defined(HAVE_PROTOTYPES)
 Q_STATIC Q_INLINE VALUE rb_class_of(VALUE obj)
