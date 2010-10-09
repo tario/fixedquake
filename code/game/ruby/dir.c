@@ -14,6 +14,14 @@
 
 #include "ruby.h"
 
+#ifdef Q3_VM
+
+#include "bg_lib.h"
+
+#define NULL 0
+
+#else
+
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -62,6 +70,8 @@ char *strchr _((char*,char));
 #include <ctype.h>
 
 #include "util.h"
+
+#endif
 
 #if !defined HAVE_LSTAT && !defined lstat
 #define lstat stat
