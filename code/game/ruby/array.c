@@ -15,6 +15,7 @@
 #include "ruby.h"
 #include "util.h"
 #include "st.h"
+#include  "q_fake.h"
 
 VALUE rb_cArray;
 static ID id_cmp;
@@ -32,7 +33,7 @@ rb_mem_clear(mem, size)
     }
 }
 
-static inline void
+Q_STATIC Q_INLINE void
 memfill(mem, size, val)
     register VALUE *mem;
     register long size;
@@ -45,7 +46,7 @@ memfill(mem, size, val)
 
 #define ARY_TMPLOCK  FL_USER1
 
-static inline void
+Q_STATIC Q_INLINE void
 rb_ary_modify_check(ary)
     VALUE ary;
 {
@@ -162,7 +163,9 @@ rb_ary_new3(n, va_alist)
     va_dcl
 #endif
 {
-    va_list ar;
+	// FIXME: quakeruby
+
+/*	va_list ar;
     VALUE ary;
     long i;
 
@@ -176,7 +179,8 @@ rb_ary_new3(n, va_alist)
     va_end(ar);
 
     RARRAY(ary)->len = n;
-    return ary;
+    return ary;*/
+	return Qnil;
 }
 
 VALUE
@@ -680,7 +684,7 @@ rb_ary_unshift_m(argc, argv, ary)
 }
 
 /* faster version - use this if you don't need to treat negative offset */
-static inline VALUE
+Q_STATIC Q_INLINE VALUE
 rb_ary_elt(ary, offset)
     VALUE ary;
     long offset;
