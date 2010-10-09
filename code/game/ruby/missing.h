@@ -12,6 +12,9 @@
 #ifndef MISSING_H
 #define MISSING_H
 
+
+#ifndef Q3_VM
+
 #if defined(HAVE_SYS_TIME_H)
 #  include <sys/time.h>
 #elif !defined(_WIN32)
@@ -23,6 +26,16 @@ struct timeval {
 #endif
 #if defined(HAVE_SYS_TYPES_H)
 #  include <sys/types.h>
+#endif
+
+#else
+
+typedef unsigned int time_t;
+struct timeval {
+    time_t tv_sec;	/* seconds */
+    time_t tv_usec;	/* microseconds */
+};
+
 #endif
 
 #ifndef HAVE_ACOSH
