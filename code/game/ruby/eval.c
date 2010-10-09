@@ -28,8 +28,15 @@
 #define SIG_DFL 10
 
 #include "bg_lib.h"
+#include "q_memory.h"
+#include "q_errno.h"
+
+extern int rb_trap_immediate;
+extern int rb_trap_pending;
 
 void *memchr(const void *s, int c, size_t n);
+char *strchr(const char *s, int c);
+char *strrchr(const char *s, int c);
 
 #else
 
@@ -800,7 +807,7 @@ static struct SCOPE *top_scope;
 static unsigned long frame_unique = 0;
 
 #define PUSH_FRAME() do {		\
-    volatile struct FRAME _frame;	\
+    struct FRAME _frame;	\
     _frame.prev = ruby_frame;		\
     _frame.tmp  = 0;			\
     _frame.node = ruby_current_node;	\
@@ -5787,7 +5794,7 @@ method_missing(obj, id, argc, argv, call_status)
     return rb_funcall2(obj, missing, argc+1, nargv);
 }
 
-static inline VALUE
+Q_STATIC Q_INLINE VALUE
 call_cfunc(func, recv, len, argc, argv)
     VALUE (*func)();
     VALUE recv;
@@ -6831,7 +6838,10 @@ yield_under(under, self, args)
 	return exec_under(yield_under_i, under, 0, self);
     }
     else {
-	VALUE info[2] = { args, self };
+	VALUE info[2];
+
+	info[0] = args;
+	info[1] = self;
 
 	return exec_under(yield_args_under_i, under, 0, (VALUE)info);
     }
@@ -10573,7 +10583,7 @@ rb_gc_abort_threads()
     } END_FOREACH_FROM(main_thread, th);
 }
 
-static inline void
+Q_STATIC Q_INLINE void
 stack_free(th)
     rb_thread_t th;
 {
@@ -10740,8 +10750,8 @@ rb_thread_switch(n)
     (rb_thread_switch(ruby_setjmp(rb_thread_save_context(th), (th)->context)))
 
 static void rb_thread_restore_context _((rb_thread_t,int));
-NOINLINE(static void rb_thread_restore_context_0(rb_thread_t,int));
-NOINLINE(static void stack_extend(rb_thread_t, int));
+static void rb_thread_restore_context_0(rb_thread_t,int);
+static void stack_extend(rb_thread_t, int);
 
 static void
 rb_thread_restore_context_0(rb_thread_t th, int exit)
@@ -11158,7 +11168,10 @@ rb_thread_schedule()
 #ifdef ERESTART
 	    if (e == ERESTART) goto again;
 #endif
-            if (e == EBADF) {
+            if (e == EBADF) {/*
+		    
+		    // FIXME quakeruby 
+		    
                 int badfd = -1;
                 int fd;
                 int dummy;
@@ -11198,9 +11211,9 @@ rb_thread_schedule()
                         }
                     }
                     END_FOREACH_FROM(curr, th);
-                }
+                }*/
             }
-            else {
+            {
                 FOREACH_THREAD_FROM(curr, th) {
                     if (th->wait_for & WAIT_SELECT) {
                         int v = 0;
