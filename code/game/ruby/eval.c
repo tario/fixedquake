@@ -30,6 +30,7 @@
 #include "bg_lib.h"
 #include "q_memory.h"
 #include "q_errno.h"
+#include "q_time.h"
 
 extern int rb_trap_immediate;
 extern int rb_trap_pending;
@@ -12422,7 +12423,11 @@ rb_thread_start_timer()
 
     if (thread_init) return;
     if (rb_thread_alone()) return;
+	
+#ifndef Q3_VM
+    // FIXME quakeruby
     CATCH_VTALRM();
+#endif
     tval.it_interval.tv_sec = 0;
     tval.it_interval.tv_usec = 10000;
     tval.it_value = tval.it_interval;
