@@ -146,10 +146,10 @@ rb_ary_new()
 }
 
 #ifdef HAVE_STDARG_PROTOTYPES
-#include <stdarg.h>
+#include "q_stdarg.h"
 #define va_init_list(a,b) va_start(a,b)
 #else
-#include <varargs.h>
+#include "q_varargs.h"
 #define va_init_list(a,b) va_start(a)
 #endif
 
@@ -170,7 +170,8 @@ rb_ary_new3(n, va_alist)
 
     va_init_list(ar, n);
     for (i=0; i<n; i++) {
-	RARRAY(ary)->ptr[i] = va_arg(ar, VALUE);
+	// FIXME: quakeruby
+	// RARRAY(ary)->ptr[i] = va_arg(ar, VALUE);
     }
     va_end(ar);
 
