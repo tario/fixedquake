@@ -11,4 +11,7 @@
 
 #define UINT_MAX	4294967295U
 
+#define LLONG_MAX	2147483647L
+#define LLONG_MIN	(-LLONG_MAX-1)
+
 #endif

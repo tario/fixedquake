@@ -13,14 +13,20 @@
 #include "ruby.h"
 #include "rubysig.h"
 
-#include <math.h>
-#include <float.h>
+//#include <math.h>
+//#include <float.h>
 #include <ctype.h>
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
 #endif
 
 VALUE rb_cBignum;
+
+#include "q_limits.h"
+
+// FIXME quakeruby
+#define HUGE_VAL	0x10000000000000000000000000000000000000000000000000000000000000000
+
 
 #if defined __MINGW32__
 #define USHORT _USHORT
@@ -1659,7 +1665,8 @@ rb_big_divmod(x, y)
  *
  */
 
-static VALUE
+// FIXME: quakeruby
+/*static VALUE
 rb_big_quo(x, y)
     VALUE x, y;
 {
@@ -1712,7 +1719,7 @@ rb_big_quo(x, y)
     }
     return rb_float_new(dx / dy);
 }
-
+*/
 static VALUE
 bigsqr(x)
     VALUE x;
@@ -2355,8 +2362,8 @@ Init_Bignum()
     rb_define_method(rb_cBignum, "divmod", rb_big_divmod, 1);
     rb_define_method(rb_cBignum, "modulo", rb_big_modulo, 1);
     rb_define_method(rb_cBignum, "remainder", rb_big_remainder, 1);
-    rb_define_method(rb_cBignum, "quo", rb_big_quo, 1);
-    rb_define_method(rb_cBignum, "fdiv", rb_big_quo, 1);
+//    rb_define_method(rb_cBignum, "quo", rb_big_quo, 1);
+//    rb_define_method(rb_cBignum, "fdiv", rb_big_quo, 1);
     rb_define_method(rb_cBignum, "**", rb_big_pow, 1);
     rb_define_method(rb_cBignum, "&", rb_big_and, 1);
     rb_define_method(rb_cBignum, "|", rb_big_or, 1);
