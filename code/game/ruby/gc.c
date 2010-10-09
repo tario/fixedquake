@@ -19,7 +19,7 @@
 #include "env.h"
 #include "re.h"
 
-#ifdef Q3_VM
+#ifndef Q3_VM
 
 #include <stdio.h>
 #include <setjmp.h>
