@@ -71,12 +71,16 @@ extern "C" {
 #define ISXDIGIT(c) (ISASCII(c) && isxdigit((int)(unsigned char)(c)))
 #endif
 
+#ifndef Q3_VM
+
 #if defined(HAVE_ALLOCA_H)
 #include <alloca.h>
 #else
 #  ifdef _AIX
 #pragma alloca
 #  endif
+#endif
+
 #endif
 
 #if defined(__VMS)
@@ -578,13 +582,13 @@ VALUE rb_equal _((VALUE,VALUE));
 
 RUBY_EXTERN VALUE ruby_verbose, ruby_debug;
 
-NORETURN(void rb_raise __((VALUE, const char*, ...)));
-NORETURN(void rb_fatal __((const char*, ...)));
-NORETURN(void rb_bug __((const char*, ...)));
-NORETURN(void rb_sys_fail _((const char*)));
-NORETURN(void rb_iter_break _((void)));
-NORETURN(void rb_exit _((int)));
-NORETURN(void rb_notimplement _((void)));
+void rb_raise __((VALUE, const char*, ...));
+void rb_fatal __((const char*, ...));
+void rb_bug __((const char*, ...));
+void rb_sys_fail _((const char*));
+void rb_iter_break _((void));
+void rb_exit _((int));
+void rb_notimplement _((void));
 
 void rb_warning __((const char*, ...));		/* reports if `-w' specified */
 void rb_sys_warning __((const char*, ...));	/* reports if `-w' specified */
@@ -603,7 +607,7 @@ VALUE rb_rescue _((VALUE(*)(ANYARGS),VALUE,VALUE(*)(ANYARGS),VALUE));
 VALUE rb_rescue2 __((VALUE(*)(ANYARGS),VALUE,VALUE(*)(ANYARGS),VALUE,...));
 VALUE rb_ensure _((VALUE(*)(ANYARGS),VALUE,VALUE(*)(ANYARGS),VALUE));
 VALUE rb_catch _((const char*,VALUE(*)(ANYARGS),VALUE));
-NORETURN(void rb_throw _((const char*,VALUE)));
+void rb_throw _((const char*,VALUE));
 
 VALUE rb_require _((const char*));
 
@@ -620,7 +624,7 @@ void ruby_init_stack(VALUE*);
 #endif
 void ruby_init _((void));
 void ruby_options _((int, char**));
-NORETURN(void ruby_run _((void)));
+void ruby_run _((void));
 
 RUBY_EXTERN VALUE rb_mKernel;
 RUBY_EXTERN VALUE rb_mComparable;
