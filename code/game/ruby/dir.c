@@ -18,6 +18,9 @@
 
 #include "bg_lib.h"
 #include "q_dir.h"
+#include "q_errno.h"
+
+int errno;
 
 #define NULL 0
 
