@@ -964,10 +964,10 @@ rb_define_attr(klass, name, read, write)
 }
 
 #ifdef HAVE_STDARG_PROTOTYPES
-#include <stdarg.h>
+#include "q_stdarg.h"
 #define va_init_list(a,b) va_start(a,b)
 #else
-#include <varargs.h>
+#include "q_varargs.h"
 #define va_init_list(a,b) va_start(a)
 #endif
 
