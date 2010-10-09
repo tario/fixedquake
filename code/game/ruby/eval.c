@@ -20,6 +20,13 @@
 
 #ifdef Q3_VM
 
+#define NULL 0
+#define BUFSIZ 256
+#define EXIT_FAILURE 1
+#define EXIT_SUCCESS 0
+#define SIGINT 9
+#define SIG_DFL 10
+
 #include "bg_lib.h"
 
 #else
@@ -114,7 +121,7 @@ char *strrchr _((const char*,const char));
 
 #ifdef USE_CONTEXT
 
-NORETURN(static void rb_jump_context(rb_jmpbuf_t, int));
+static void rb_jump_context(rb_jmpbuf_t, int);
 static inline void
 rb_jump_context(env, val)
     rb_jmpbuf_t env;
@@ -229,6 +236,7 @@ int _setjmp(), _longjmp();
 #  endif
 #endif
 
+#ifndef Q3_VM
 #include <sys/types.h>
 #include <signal.h>
 #include <errno.h>
@@ -242,6 +250,8 @@ int _setjmp(), _longjmp();
 #endif
 
 #include <sys/stat.h>
+
+#endif
 
 VALUE rb_cProc;
 VALUE rb_cBinding;
@@ -257,7 +267,7 @@ static VALUE method_call _((int, VALUE*, VALUE));
 VALUE rb_cUnboundMethod;
 static VALUE umethod_bind _((VALUE, VALUE));
 static VALUE rb_mod_define_method _((int, VALUE*, VALUE));
-NORETURN(static void rb_raise_jump _((VALUE)));
+static void rb_raise_jump _((VALUE));
 static VALUE rb_make_exception _((int argc, VALUE *argv));
 
 static int scope_vmode;
@@ -333,7 +343,7 @@ rb_check_safe_str(x)
     }
 }
 
-NORETURN(static void print_undef _((VALUE, ID)));
+static void print_undef _((VALUE, ID));
 static void
 print_undef(klass, id)
     VALUE klass;
@@ -970,7 +980,7 @@ dvar_asgn_internal(id, value, curr)
     }
 }
 
-static inline void
+Q_STATIC Q_INLINE void
 dvar_asgn(id, value)
     ID id;
     VALUE value;
@@ -978,7 +988,7 @@ dvar_asgn(id, value)
     dvar_asgn_internal(id, value, 0);
 }
 
-static inline void
+Q_STATIC Q_INLINE void
 dvar_asgn_curr(id, value)
     ID id;
     VALUE value;
@@ -1781,7 +1791,7 @@ rb_eval_string_wrap(str, state)
     return val;
 }
 
-NORETURN(static void localjump_error(const char*, VALUE, int));
+static void localjump_error(const char*, VALUE, int);
 static void
 localjump_error(mesg, value, reason)
     const char *mesg;
@@ -1838,7 +1848,7 @@ localjump_reason(exc)
     return rb_iv_get(exc, "@reason");
 }
 
-NORETURN(static void jump_tag_but_local_jump _((int,VALUE)));
+static void jump_tag_but_local_jump _((int,VALUE));
 static void
 jump_tag_but_local_jump(state, val)
     int state;
@@ -2944,10 +2954,10 @@ class_prefix(self, cpath)
   }\
 } while (0)
 
-NORETURN(static void return_jump _((VALUE)));
-NORETURN(static void break_jump _((VALUE)));
-NORETURN(static void next_jump _((VALUE)));
-NORETURN(static void unknown_node _((NODE * volatile)));
+static void return_jump _((VALUE));
+static void break_jump _((VALUE));
+static void next_jump _((VALUE));
+static void unknown_node _((NODE * volatile));
 
 static void
 unknown_node(node)
@@ -4459,7 +4469,7 @@ rb_mod_protected_method_defined(mod, mid)
     return Qfalse;
 }
 
-NORETURN(static VALUE terminate_process _((int, VALUE)));
+static VALUE terminate_process _((int, VALUE));
 static VALUE
 terminate_process(status, mesg)
     int status;
@@ -4595,7 +4605,7 @@ rb_iter_break()
     break_jump(Qnil);
 }
 
-NORETURN(static void rb_longjmp _((int, VALUE)));
+static void rb_longjmp _((int, VALUE));
 static VALUE make_backtrace _((void));
 
 static void
@@ -4845,7 +4855,7 @@ rb_f_block_given_p()
 
 VALUE rb_eThreadError;
 
-NORETURN(static void proc_jump_error(int, VALUE));
+static void proc_jump_error(int, VALUE);
 static void
 proc_jump_error(state, result)
     int state;
@@ -7004,7 +7014,7 @@ rb_mod_module_exec(argc, argv, mod)
 
 VALUE rb_load_path;
 
-NORETURN(static void load_failed _((VALUE)));
+static void load_failed _((VALUE));
 
 void
 rb_load(fname, wrap)
@@ -8023,7 +8033,7 @@ rb_f_local_variables()
 }
 
 static VALUE rb_f_catch _((VALUE,VALUE));
-NORETURN(static VALUE rb_f_throw _((int,VALUE*)));
+static VALUE rb_f_throw _((int,VALUE*));
 
 struct end_proc_data {
     void (*func)();
@@ -10727,9 +10737,9 @@ rb_thread_switch(n)
 #define THREAD_SAVE_CONTEXT(th) \
     (rb_thread_switch(ruby_setjmp(rb_thread_save_context(th), (th)->context)))
 
-NORETURN(static void rb_thread_restore_context _((rb_thread_t,int)));
-NORETURN(NOINLINE(static void rb_thread_restore_context_0(rb_thread_t,int)));
-NORETURN(NOINLINE(static void stack_extend(rb_thread_t, int)));
+static void rb_thread_restore_context _((rb_thread_t,int));
+NOINLINE(static void rb_thread_restore_context_0(rb_thread_t,int));
+NOINLINE(static void stack_extend(rb_thread_t, int));
 
 static void
 rb_thread_restore_context_0(rb_thread_t th, int exit)
@@ -10788,7 +10798,7 @@ static volatile int C(f), C(g), C(h), C(i), C(j);
 static volatile int C(k), C(l), C(m), C(n), C(o);
 static volatile int C(p), C(q), C(r), C(s), C(t);
 int rb_dummy_false = 0;
-NORETURN(NOINLINE(static void register_stack_extend(rb_thread_t, int, VALUE *)));
+NOINLINE(static void register_stack_extend(rb_thread_t, int, VALUE *));
 static void
 register_stack_extend(rb_thread_t th, int exit, VALUE *curr_bsp)
 {
@@ -10927,7 +10937,7 @@ rb_thread_fd_close(fd)
     END_FOREACH(th);
 }
 
-NORETURN(static void rb_thread_main_jump _((VALUE, int)));
+static void rb_thread_main_jump _((VALUE, int));
 static void
 rb_thread_main_jump(err, tag)
     VALUE err;
@@ -10939,7 +10949,7 @@ rb_thread_main_jump(err, tag)
     rb_thread_restore_context(main_thread, tag);
 }
 
-NORETURN(static void rb_thread_deadlock _((void)));
+static void rb_thread_deadlock _((void));
 static void
 rb_thread_deadlock()
 {
