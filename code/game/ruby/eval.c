@@ -29,6 +29,8 @@
 
 #include "bg_lib.h"
 
+void *memchr(const void *s, int c, size_t n);
+
 #else
 
 #ifdef HAVE_STDLIB_H
