@@ -18,6 +18,12 @@
 #include "util.h"
 #include "rubysig.h"
 
+#ifdef Q3_VM
+
+#include "bg_lib.h"
+
+#else
+
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
@@ -30,12 +36,16 @@
 
 #include <stdio.h>
 
+#endif
+
 #include "st.h"
 #include "dln.h"
 
 #ifdef __APPLE__
 #include <crt_externs.h>
 #endif
+
+#ifndef Q3_VM
 
 /* Make alloca work the best possible way.  */
 #ifdef __GNUC__
@@ -56,17 +66,22 @@ void *alloca ();
 # endif /* HAVE_ALLOCA_H */
 #endif /* __GNUC__ */
 
+#endif
+
 #ifdef HAVE_STDARG_PROTOTYPES
-#include <stdarg.h>
+#include "q_stdarg.h"
 #define va_init_list(a,b) va_start(a,b)
 #else
-#include <varargs.h>
+#include "q_varargs.h"
 #define va_init_list(a,b) va_start(a)
 #endif
 
 #ifndef HAVE_STRING_H
 char *strrchr _((const char*,const char));
 #endif
+
+
+#ifndef Q3_VM
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -93,6 +108,8 @@ char *strrchr _((const char*,const char));
 
 #ifdef __VMS
 #include "vmsruby_private.h"
+#endif
+
 #endif
 
 #ifdef USE_CONTEXT
