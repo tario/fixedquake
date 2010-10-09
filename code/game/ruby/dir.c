@@ -17,6 +17,7 @@
 #ifdef Q3_VM
 
 #include "bg_lib.h"
+#include "q_dir.h"
 
 #define NULL 0
 
