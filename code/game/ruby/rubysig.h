@@ -106,6 +106,14 @@ void rb_trap_restore_mask _((void));
 RUBY_EXTERN int rb_thread_critical;
 RUBY_EXTERN int rb_thread_pending;
 void rb_thread_schedule _((void));
+
+#ifdef Q3_VM
+
+# define CHECK_INTS do {\
+} while (0)
+
+#else
+
 #if defined(HAVE_SETITIMER) || defined(_THREAD_SAFE)
 # define CHECK_INTS do {\
     if (!(rb_prohibit_interrupt || rb_thread_critical)) {\
@@ -126,6 +134,8 @@ RUBY_EXTERN int rb_thread_tick;
     }\
     if (rb_trap_pending) rb_trap_exec();\
 } while (0)
+#endif
+
 #endif
 
 #endif
