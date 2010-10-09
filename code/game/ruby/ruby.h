@@ -114,6 +114,8 @@ typedef unsigned long ID;
 # endif
 #endif
 
+#ifndef Q3_VM
+
 #ifdef HAVE_LONG_LONG
 # ifndef LLONG_MAX
 #  ifdef LONG_LONG_MAX
@@ -138,6 +140,12 @@ typedef unsigned long ID;
 #   endif
 #  endif
 # endif
+#endif
+
+#else
+
+#include "bg_lib.h"
+#define LLONG_MIN LONG_MIN
 #endif
 
 #define FIXNUM_MAX (LONG_MAX>>1)

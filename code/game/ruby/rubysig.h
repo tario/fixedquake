@@ -12,7 +12,10 @@
 
 #ifndef SIG_H
 #define SIG_H
+
+#ifndef Q3_VM
 #include <errno.h>
+#endif
 
 #ifdef _WIN32
 typedef LONG rb_atomic_t;
