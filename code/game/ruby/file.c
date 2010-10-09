@@ -11,20 +11,20 @@
   Copyright (C) 2000  Information-technology Promotion Agency, Japan
 
 **********************************************************************/
-
-#ifdef _WIN32
-#include "missing/file.h"
-#endif
-#ifdef __CYGWIN__
-#include <windows.h>
-#include <sys/cygwin.h>
-#endif
-
 #include "ruby.h"
 #include "rubyio.h"
 #include "rubysig.h"
 #include "util.h"
 #include "dln.h"
+
+#ifdef Q3_VM
+#include "bg_lib.h"
+#include "q_memory.h"
+#include "q_dir.h"
+#include "q_errno.h"
+
+#define NULL 0
+#else
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -77,6 +77,8 @@ char *strrchr _((const char*,const char));
 #endif
 #if !HAVE_FSEEKO && !defined(fseeko)
 # define fseeko  fseek
+#endif
+
 #endif
 
 #ifdef __BEOS__ /* should not change ID if -1 */
@@ -2070,7 +2072,7 @@ rb_file_s_utime(argc, argv)
 
 #endif
 
-NORETURN(static void sys_fail2 _((VALUE,VALUE)));
+static void sys_fail2 _((VALUE,VALUE));
 static void
 sys_fail2(s1, s2)
     VALUE s1, s2;
@@ -2298,6 +2300,8 @@ rb_file_s_umask(argc, argv)
     return INT2FIX(omask);
 }
 
+#ifndef Q3_VM
+
 #ifdef __CYGWIN__
 #undef DOSISH
 #endif
@@ -2331,6 +2335,8 @@ rb_file_s_umask(argc, argv)
 # else
 #   define CharNext(p) ((p) + 1)
 # endif
+#endif
+
 #endif
 
 #ifdef DOSISH_DRIVE_LETTER
@@ -2375,7 +2381,7 @@ getcwdofdrv(drv)
 }
 #endif
 
-static inline char *
+Q_STATIC Q_INLINE char *
 skiproot(path)
     const char *path;
 {

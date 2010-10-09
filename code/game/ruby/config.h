@@ -61,7 +61,7 @@
 #define HAVE_SYS_TIMES_H 1
 #define HAVE_SYS_PARAM_H 1
 #define HAVE_SYSCALL_H 1
-#define HAVE_PWD_H 1
+//#define HAVE_PWD_H 1
 #define HAVE_GRP_H 1
 #define HAVE_A_OUT_H 1
 #define HAVE_UTIME_H 1

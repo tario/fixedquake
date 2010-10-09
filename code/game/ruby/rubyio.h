@@ -13,11 +13,20 @@
 #ifndef RUBYIO_H
 #define RUBYIO_H
 
+#ifdef Q3_VM
+
+#include "bg_lib.h"
+#include "q_file.h"
+
+#else 
+
 #include <stdio.h>
 #include <errno.h>
 
 #if defined(HAVE_STDIO_EXT_H)
 #include <stdio_ext.h>
+#endif
+
 #endif
 
 typedef struct rb_io_t {
@@ -84,7 +93,7 @@ int rb_io_wait_writable _((int));
 void rb_io_set_nonblock(rb_io_t *fptr);
 
 VALUE rb_io_taint_check _((VALUE));
-NORETURN(void rb_eof_error _((void)));
+void rb_eof_error _((void));
 
 void rb_read_check _((FILE*));
 int rb_read_pending _((FILE*));
