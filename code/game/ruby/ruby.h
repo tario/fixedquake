@@ -36,6 +36,8 @@ extern "C" {
 
 #include "defines.h"
 
+#ifndef Q3_VM
+
 #ifdef HAVE_STDLIB_H
 # include <stdlib.h>
 #endif
@@ -52,6 +54,8 @@ extern "C" {
 
 #include <stddef.h>
 #include <stdio.h>
+
+#endif
 
 /* need to include <ctype.h> to use these macros */
 #ifndef ISPRINT
@@ -696,11 +700,18 @@ RUBY_EXTERN VALUE rb_eLoadError;
 RUBY_EXTERN VALUE rb_stdin, rb_stdout, rb_stderr;
 RUBY_EXTERN VALUE ruby_errinfo;
 
-static inline VALUE
-#if defined(HAVE_PROTOTYPES)
-rb_class_of(VALUE obj)
+#ifdef Q3_VM
+#define Q_STATIC
+#define Q_INLINE
 #else
-rb_class_of(obj)
+#define Q_STATIC static
+#define Q_INLINE inline
+#endif
+
+#if defined(HAVE_PROTOTYPES)
+Q_STATIC Q_INLINE VALUE rb_class_of(VALUE obj)
+#else
+Q_STATIC Q_INLINE VALUE rb_class_of(obj)
     VALUE obj;
 #endif
 {
@@ -713,11 +724,10 @@ rb_class_of(obj)
     return RBASIC(obj)->klass;
 }
 
-static inline int
 #if defined(HAVE_PROTOTYPES)
-rb_type(VALUE obj)
+Q_STATIC Q_INLINE int rb_type(VALUE obj)
 #else
-rb_type(obj)
+Q_STATIC Q_INLINE int rb_type(obj)
    VALUE obj;
 #endif
 {
@@ -730,11 +740,10 @@ rb_type(obj)
     return BUILTIN_TYPE(obj);
 }
 
-static inline int
 #if defined(HAVE_PROTOTYPES)
-rb_special_const_p(VALUE obj)
+Q_STATIC Q_INLINE int rb_special_const_p(VALUE obj)
 #else
-rb_special_const_p(obj)
+Q_STATIC Q_INLINE int rb_special_const_p(obj)
     VALUE obj;
 #endif
 {
