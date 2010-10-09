@@ -17,6 +17,21 @@
 #include <errno.h>
 #endif
 
+#ifdef Q3_VM
+
+# define ATOMIC_TEST(var) ((var) ? ((var) = 0, 1) : 0)
+# define ATOMIC_SET(var, val) ((var) = (val))
+# define ATOMIC_INC(var) (++(var))
+# define ATOMIC_DEC(var) (--(var))
+
+#define TRAP_BEG
+#define TRAP_END
+# define RUBY_CRITICAL(statements) do {\
+    statements;\
+} while (0)
+
+#else
+
 #ifdef _WIN32
 typedef LONG rb_atomic_t;
 
@@ -65,7 +80,12 @@ typedef int rb_atomic_t;
     rb_trap_immediate = trap_immediate;\
 } while (0)
 #endif
+
+#endif
+
+#ifndef  Q3_VM
 RUBY_EXTERN rb_atomic_t rb_trap_immediate;
+#endif
 
 RUBY_EXTERN int rb_prohibit_interrupt;
 #define DEFER_INTS (rb_prohibit_interrupt++)
@@ -77,7 +97,10 @@ RUBY_EXTERN int rb_prohibit_interrupt;
 
 VALUE rb_with_disable_interrupt _((VALUE(*)(ANYARGS),VALUE));
 
+#ifndef  Q3_VM
 RUBY_EXTERN rb_atomic_t rb_trap_pending;
+#endif
+
 void rb_trap_restore_mask _((void));
 
 RUBY_EXTERN int rb_thread_critical;
