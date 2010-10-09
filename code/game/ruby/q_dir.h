@@ -29,9 +29,6 @@ struct dirent {
 
 typedef long int off_t;
 
-#define S_IFMT 64
-#define S_IFDIR 65
-
 // directories
 extern DIR *opendir (const char *__name);
 extern struct dirent* readdir(DIR* dir);
