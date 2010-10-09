@@ -14,16 +14,26 @@
 #include "env.h"
 #include "st.h"
 
+#ifndef Q3_VM
 #include <stdio.h>
+#endif
+
+#ifdef Q3_VM
+#include "q_file.h"
+#include "bg_lib.h"
+#endif
+
 #ifdef HAVE_STDARG_PROTOTYPES
-#include <stdarg.h>
+#include "q_stdarg.h"
 #define va_init_list(a,b) va_start(a,b)
 #else
-#include <varargs.h>
+#include "q_varargs.h"
 #define va_init_list(a,b) va_start(a)
 #endif
 #ifdef HAVE_STDLIB_H
+#ifndef Q3_VM
 #include <stdlib.h>
+#endif
 #endif
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS 0
