@@ -971,7 +971,10 @@ rb_define_attr(klass, name, read, write)
 #define va_init_list(a,b) va_start(a)
 #endif
 
-int
+#ifdef Q3_VM
+#include "bg_lib.h"
+#endif
+
 #ifdef HAVE_STDARG_PROTOTYPES
 rb_scan_args(int argc, const VALUE *argv, const char *fmt, ...)
 #else
