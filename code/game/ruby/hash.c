@@ -21,6 +21,11 @@
 #include <crt_externs.h>
 #endif
 
+#ifdef Q3_VM
+#include "bg_lib.h"
+#include "q_dir.h"
+#endif
+
 #define HASH_DELETED  FL_USER1
 #define HASH_PROC_DEFAULT FL_USER2
 
