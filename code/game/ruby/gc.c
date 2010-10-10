@@ -41,6 +41,10 @@
 
 #include "q_setjmp.h"
 #include "q_file.h"
+#include "q_memory.h"
+#include "q_limits.h"
+
+#define RLIMIT_STACK		3
 
 #endif
 
@@ -666,7 +670,7 @@ gc_mark_rest()
     }
 }
 
-static inline int
+Q_STATIC Q_INLINE int
 is_pointer_to_heap(ptr)
     void *ptr;
 {
@@ -1093,7 +1097,7 @@ gc_mark_children(ptr, lev)
 
 static int obj_free _((VALUE));
 
-static inline void
+Q_STATIC Q_INLINE void
 add_freelist(p)
     RVALUE *p;
 {
@@ -1258,7 +1262,7 @@ rb_gc_force_recycle(p)
     add_freelist(RANY(p));
 }
 
-static inline void
+Q_STATIC Q_INLINE void
 make_deferred(p)
     RVALUE *p;
 {
@@ -1485,7 +1489,9 @@ garbage_collect()
     FLUSH_REGISTER_WINDOWS;
     /* This assumes that all registers are saved into the jmp_buf (and stack) */
     rb_setjmp(save_regs_gc_mark);
-    mark_locations_array((VALUE*)save_regs_gc_mark, sizeof(save_regs_gc_mark) / sizeof(VALUE *));
+    
+    // FIXME: quake ruby
+    // mark_locations_array((VALUE*)save_regs_gc_mark, sizeof(save_regs_gc_mark) / sizeof(VALUE *));
 #if STACK_GROW_DIRECTION < 0
     rb_gc_mark_locations((VALUE*)STACK_END, rb_gc_stack_start);
 #elif STACK_GROW_DIRECTION > 0

@@ -4,4 +4,8 @@
 void free(void* p);
 void *realloc(void *ptr, size_t size);
 
+void *malloc(size_t size);
+
+void *alloca(size_t size);
+
 #endif

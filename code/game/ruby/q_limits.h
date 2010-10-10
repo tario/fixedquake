@@ -6,6 +6,11 @@
 
 #define PATH_MAX        4096
 #define MAXPATHLEN	PATH_MAX
+
+struct rlimit {
+	int rlim_cur;
+};
+
 #else
 #include <limits.h>
 #endif
