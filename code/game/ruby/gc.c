@@ -40,6 +40,7 @@
 #else
 
 #include "q_setjmp.h"
+#include "q_file.h"
 
 #endif
 
@@ -51,6 +52,8 @@ void rb_io_fptr_finalize _((struct rb_io_t*));
 #ifdef __CYGWIN__
 int _setjmp(), _longjmp();
 #endif
+
+#ifndef Q3_VM
 
 /* Make alloca work the best possible way.  */
 #ifdef __GNUC__
@@ -71,6 +74,8 @@ void *alloca ();
 # endif /* HAVE_ALLOCA_H */
 #endif /* __GNUC__ */
 
+#endif
+
 #ifndef GC_MALLOC_LIMIT
 #if defined(MSDOS) || defined(__human68k__)
 #define GC_MALLOC_LIMIT 200000
@@ -87,7 +92,7 @@ static void garbage_collect();
 
 int ruby_gc_stress = 0;
 
-NORETURN(void rb_exc_jump _((VALUE)));
+void rb_exc_jump _((VALUE));
 
 void
 rb_memerror()

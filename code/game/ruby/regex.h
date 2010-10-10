@@ -41,7 +41,11 @@
 # define register_info_type ruby_register_info_type
 #endif
 
+#ifdef Q3_VM
+#include "bg_lib.h"
+#else
 #include <stddef.h>
+#endif
 
 /* Define number of parens for which we record the beginnings and ends.
    This affects how much space the `struct re_registers' type takes up.  */

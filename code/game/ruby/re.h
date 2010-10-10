@@ -13,8 +13,16 @@
 #ifndef RE_H
 #define RE_H
 
+#ifdef Q3_VM
+
+#include "bg_lib.h"
+
+#else
+
 #include <sys/types.h>
 #include <stdio.h>
+
+#endif
 
 #include "regex.h"
 
