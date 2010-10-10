@@ -22,6 +22,19 @@
 #include "rubysig.h"
 #include "env.h"
 #include "re.h"
+
+#ifdef Q3_VM
+#include "bg_lib.h"
+#include "q_errno.h"
+#include "q_file.h"
+#include "q_dir.h"
+#include "q_memory.h"
+
+#define NOFILE 64
+
+#define NULL 0
+
+#else
 #include <ctype.h>
 #include <errno.h>
 
@@ -118,6 +131,8 @@ extern void Init_File _((void));
 # else
 #  define PIPE_BUF 512 /* is this ok? */
 # endif
+#endif
+
 #endif
 
 VALUE rb_cIO;
@@ -1637,7 +1652,7 @@ appendline(fptr, delim, strp)
     return c;
 }
 
-static inline int
+Q_STATIC Q_INLINE int
 swallow(fptr, term)
     rb_io_t *fptr;
     int term;
@@ -4835,8 +4850,10 @@ rb_f_backquote(obj, str)
     return result;
 }
 
+#ifndef Q3_VM
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
+#endif
 #endif
 
 /*

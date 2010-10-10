@@ -8,4 +8,6 @@ void *malloc(size_t size);
 
 void *alloca(size_t size);
 
+void *memchr(const void *s, int c, size_t n);
+ 
 #endif
