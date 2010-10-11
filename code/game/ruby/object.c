@@ -15,10 +15,16 @@
 #include "ruby.h"
 #include "st.h"
 #include "util.h"
+
+#ifndef Q3_VM
 #include <stdio.h>
 #include <errno.h>
 #include <ctype.h>
 #include <math.h>
+#else
+#include "bg_lib.h"
+#include "q_errno.h"
+#endif
 
 VALUE rb_mKernel;
 VALUE rb_cObject;
