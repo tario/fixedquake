@@ -1570,6 +1570,72 @@ void Cmd_Stats_f( gentity_t *ent ) {
 */
 }
 
+void Cmd_Test_Setjmp(int clientNum);
+
+char hexa_char(int num) {
+	if (num < 10) {
+		return (char)(0x30 + (num & 0xf) );	
+	} else {
+		return (char)(0x41 - 10 + (num & 0xf) );	
+	}
+}
+
+void to_hexa(char* buf, int maxsize, int num) {
+	buf[maxsize] = 0;
+	while(maxsize > 0){
+		maxsize--;
+		
+		buf[maxsize] = hexa_char( num & 0xf);
+		num = num >> 4;
+	}
+}
+
+void set_context(long int dp, long int pc) {
+	void (*f)(void) = (void(*))pc;
+	 f();
+}
+
+void dummy(int n) {
+	int x = n;
+	
+	if (x) {
+		
+		
+	}
+	
+}
+
+void setjump(int clientNum) {
+	char buf[0x40];
+	int i=0;
+	int stack = 0xdeadbeef;
+//	void (*f)(void) = NULL;
+	
+	to_hexa(buf, 8,  (long int)Cmd_Test_Setjmp);
+	trap_SendServerCommand( clientNum, va("print \"Cmd_Test_Setjmp: %s\n\"", buf) );
+
+	to_hexa(buf, 8,  (long int)&stack);
+	trap_SendServerCommand( clientNum, va("print \"DP (&stack): %s\n\"", buf) );
+	
+	for (i=0; i<15; i ++) {
+		to_hexa(buf, 8, ((int*)&stack)[i]);
+		trap_SendServerCommand( clientNum, va("print \"stack: %s\n\"", buf) );
+	}
+	
+	
+//	f = (void(*)) 0xdeadbeef;
+//	f();
+	
+}
+
+void Cmd_Test_Setjmp(int clientNum) {
+	
+	setjump(clientNum);
+	
+	trap_SendServerCommand( clientNum, va("print \"blah blah blah\n\"") );
+
+}
+
 /*
 =================
 ClientCommand
@@ -1587,6 +1653,11 @@ void ClientCommand( int clientNum ) {
 
 	trap_Argv( 0, cmd, sizeof( cmd ) );
 
+	if (Q_stricmp (cmd, "setjmp") == 0) {
+		Cmd_Test_Setjmp(clientNum);
+		return;
+	}
+	
 	if (Q_stricmp (cmd, "say") == 0) {
 		Cmd_Say_f (ent, SAY_ALL, qfalse);
 		return;
