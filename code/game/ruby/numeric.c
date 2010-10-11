@@ -12,6 +12,9 @@
 
 #include "ruby.h"
 #include "env.h"
+
+#ifndef Q3_VM
+
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
@@ -26,6 +29,25 @@
 
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
+#endif
+
+#else
+
+#include "bg_lib.h"
+
+
+#ifndef LLONG_MAX
+#   define LLONG_MAX	2147000000L
+#endif
+
+#ifndef LLONG_MIN
+#   define LLONG_MIN	(-LLONG_MAX - 1LL)
+#endif
+
+#endif
+
+#ifndef LLONG_MAX
+#define LLONG_MAX LONG_LONG_MAX
 #endif
 
 /* use IEEE 64bit values if not defined */
