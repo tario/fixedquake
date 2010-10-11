@@ -11,8 +11,14 @@
 **********************************************************************/
 
 #include "ruby.h"
+
+#ifndef Q3_VM
 #include <math.h>
 #include <errno.h>
+#else
+#include "bg_lib.h"
+#include "q_errno.h"
+#endif
 
 VALUE rb_mMath;
 
