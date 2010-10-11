@@ -15,12 +15,20 @@
 #include "st.h"
 #include "util.h"
 
+#ifndef Q3_VM
+
 #include <math.h>
 #ifdef HAVE_FLOAT_H
 #include <float.h>
 #endif
 #ifdef HAVE_IEEEFP_H
 #include <ieeefp.h>
+#endif
+
+#else
+
+#include "bg_lib.h"
+
 #endif
 
 #define BITSPERSHORT (2*CHAR_BIT)
