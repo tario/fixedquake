@@ -1215,7 +1215,7 @@ rb_obj_remove_instance_variable(obj, name)
     return Qnil;		/* not reached */
 }
 
-NORETURN(static void uninitialized_constant _((VALUE, ID)));
+static void uninitialized_constant _((VALUE, ID));
 static void
 uninitialized_constant(klass, id)
     VALUE klass;
