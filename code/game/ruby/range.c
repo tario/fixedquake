@@ -15,6 +15,10 @@
 VALUE rb_cRange;
 static ID id_cmp, id_succ, id_beg, id_end, id_excl;
 
+#ifdef Q3_VM
+#define NULL 0
+#endif
+
 #define EXCL(r) RTEST(rb_ivar_get((r), id_excl))
 #define SET_EXCL(r,v) rb_ivar_set((r), id_excl, (v) ? Qtrue : Qfalse)
 
