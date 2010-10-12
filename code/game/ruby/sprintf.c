@@ -14,8 +14,13 @@
 
 #include "ruby.h"
 #include "re.h"
+
+#ifndef Q3_VM
 #include <ctype.h>
 #include <math.h>
+#else
+#include "bg_lib.h"
+#endif
 
 #define BIT_DIGITS(N)   (((N)*146)/485 + 1)  /* log2(10) =~ 146/485 */
 #define BITSPERDIG (SIZEOF_BDIGITS*CHAR_BIT)
