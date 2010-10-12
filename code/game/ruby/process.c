@@ -1897,6 +1897,7 @@ proc_setpriority(obj, which, who, prio)
 #endif
 }
 
+/*
 #if SIZEOF_RLIM_T == SIZEOF_INT
 # define RLIM2NUM(v) UINT2NUM(v)
 # define NUM2RLIM(v) NUM2UINT(v)
@@ -1907,7 +1908,7 @@ proc_setpriority(obj, which, who, prio)
 # define RLIM2NUM(v) ULL2NUM(v)
 # define NUM2RLIM(v) NUM2ULL(v)
 #endif
-
+*/
 /*
  *  call-seq:
  *     Process.getrlimit(resource)   => [cur_limit, max_limit]
