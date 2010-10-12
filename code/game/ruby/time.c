@@ -11,6 +11,9 @@
 **********************************************************************/
 
 #include "ruby.h"
+
+#ifndef Q3_VM
+
 #include <sys/types.h>
 #include <time.h>
 #include <errno.h>
@@ -20,6 +23,16 @@
 #endif
 
 #include <math.h>
+
+#else
+
+#include "bg_lib.h"
+#include "q_errno.h"
+#include "q_time.h"
+
+#define NULL 0
+
+#endif
 
 VALUE rb_cTime;
 
