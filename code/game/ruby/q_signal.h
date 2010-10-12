@@ -53,6 +53,6 @@
 
 typedef void (*__sighandler_t) (int);
 
-//sighandler_t signal(int signum, sighandler_t handler);
+__sighandler_t signal(int signum, __sighandler_t handler);
 
 #endif
