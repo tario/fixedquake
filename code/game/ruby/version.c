@@ -12,7 +12,13 @@
 
 #include "ruby.h"
 #include "version.h"
+
+#ifndef Q3_VM
 #include <stdio.h>
+#else
+#include "bg_lib.h"
+#include "q_file.h"
+#endif
 
 #define PRINT(type) puts(ruby_##type)
 #define MKSTR(type) rb_obj_freeze(rb_str_new(ruby_##type, sizeof(ruby_##type)-1))
