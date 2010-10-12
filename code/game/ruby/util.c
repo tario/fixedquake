@@ -12,6 +12,8 @@
 
 #include "ruby.h"
 
+#ifndef Q3_VM
+
 #include <ctype.h>
 #include <stdio.h>
 #include <errno.h>
@@ -26,6 +28,14 @@
 #endif
 
 #include "util.h"
+
+#else
+
+#include "bg_lib.h"
+#include "q_errno.h"
+
+#endif
+
 #ifndef HAVE_STRING_H
 char *strchr _((char*,char));
 #endif
@@ -67,6 +77,8 @@ scan_hex(start, len, retlen)
     return retval;
 }
 
+#ifndef Q3_VM
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
@@ -74,6 +86,8 @@ scan_hex(start, len, retlen)
 #endif
 #if defined(HAVE_FCNTL_H)
 #include <fcntl.h>
+#endif
+
 #endif
 
 #ifndef S_ISDIR
@@ -262,7 +276,9 @@ valid_filename(char *s)
 
 #if defined __DJGPP__
 
+#ifndef Q3_VM
 #include <dpmi.h>
+#endif
 
 static char dbcs_table[256];
 
@@ -337,7 +353,10 @@ push_element(const char *path, VALUE vinfo)
     return 0;
 }
 
+#ifndef Q3_VM
 #include <dirent.h>
+#endif
+
 int __opendir_flags = __OPENDIR_PRESERVE_CASE;
 
 char **
@@ -871,6 +890,7 @@ ruby_getcwd()
 #define Llong LONG_LONG
 #endif
 
+#ifndef Q3_VM
 #ifdef DEBUG
 #include "stdio.h"
 #define Bug(x) {fprintf(stderr, "%s\n", x); exit(1);}
@@ -882,6 +902,8 @@ ruby_getcwd()
 #ifdef USE_LOCALE
 #include "locale.h"
 #endif
+
+ #endif
 
 #ifdef MALLOC
 extern void *MALLOC(size_t);
@@ -906,7 +928,11 @@ static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
 #define IEEE_Arith
 #endif
 
+#ifndef Q3_VM
 #include "errno.h"
+#else
+#include "q_errno.h"
+#endif
 
 #ifdef Bad_float_h
 
@@ -938,11 +964,17 @@ static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
 #endif
 
 #else /* ifndef Bad_float_h */
+
+#ifndef Q3_VM
 #include "float.h"
+#endif
+
 #endif /* Bad_float_h */
 
 #ifndef __MATH_H__
+#ifndef Q3_VM
 #include "math.h"
+#endif
 #endif
 
 #ifdef __cplusplus
