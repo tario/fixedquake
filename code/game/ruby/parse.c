@@ -68,7 +68,7 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 189 of yacc.c  */
-//#line 13 "parse.y"
+#line 13 "parse.y"
 
 
 #define YYDEBUG 1
@@ -84,11 +84,21 @@
 #include "st.h"
 
 #ifndef Q3_VM
+
 #include <stdio.h>
 #include <errno.h>
 #include <ctype.h>
+
 #else
+
 #include "bg_lib.h"
+#include "q_file.h"
+#include "q_errno.h"
+
+#ifndef NULL
+#  define NULL 0
+#endif
+
 #endif
 
 #define YYMALLOC	rb_parser_malloc
