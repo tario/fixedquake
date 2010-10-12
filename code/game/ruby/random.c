@@ -179,6 +179,8 @@ rb_genrand_real(void)
 
 #include "ruby.h"
 
+#ifndef Q3_VM
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -187,6 +189,12 @@ rb_genrand_real(void)
 #include <sys/stat.h>
 #ifdef HAVE_FCNTL_H
 #include <fcntl.h>
+#endif
+
+#else
+
+#include "q_dir.h"
+
 #endif
 
 static VALUE saved_seed = INT2FIX(0);
