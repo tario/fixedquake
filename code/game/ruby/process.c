@@ -38,6 +38,7 @@
 #include "q_errno.h"
 #include "q_file.h"
 #include "q_process.h"
+#include "q_string.h"
 #define NULL 0
 
 #define SIGHUP		 1
