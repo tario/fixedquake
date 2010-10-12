@@ -18,11 +18,19 @@
 #define BEG(no) regs->beg[no]
 #define END(no) regs->end[no]
 
+#ifndef Q3_VM
+
 #include <math.h>
 #include <ctype.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
+#else
+
+#include "bg_lib.h"
+
 #endif
 
 VALUE rb_cString;
@@ -39,7 +47,7 @@ VALUE rb_cString;
 
 VALUE rb_fs;
 
-static inline void
+Q_STATIC Q_INLINE void
 str_mod_check(s, p, len)
     VALUE s;
     char *p;
@@ -50,7 +58,7 @@ str_mod_check(s, p, len)
     }
 }
 
-static inline void
+Q_STATIC Q_INLINE void
 str_frozen_check(s)
     VALUE s;
 {
