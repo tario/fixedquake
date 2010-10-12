@@ -1,6 +1,6 @@
 /**********************************************************************
 
-  pack.c -
+  expack.c -
 
   $Author: shyouhei $
   $Date: 2009-02-19 07:02:43 -0200 (jue 19 de feb de 2009) $
@@ -11,8 +11,14 @@
 **********************************************************************/
 
 #include "ruby.h"
+
+#ifndef Q3_VM
 #include <sys/types.h>
 #include <ctype.h>
+#else
+#include "bg_lib.h"
+#include "q_file.h"
+#endif
 
 #define SIZE16 2
 #define SIZE32 4
@@ -1112,7 +1118,7 @@ qpencode(str, from, len)
     }
 }
 
-static inline int
+Q_STATIC Q_INLINE int
 hex2num(c)
     char c;
 {
