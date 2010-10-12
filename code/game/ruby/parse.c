@@ -68,7 +68,7 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 189 of yacc.c  */
-#line 13 "parse.y"
+//#line 13 "parse.y"
 
 
 #define YYDEBUG 1
@@ -82,9 +82,14 @@
 #include "intern.h"
 #include "node.h"
 #include "st.h"
+
+#ifndef Q3_VM
 #include <stdio.h>
 #include <errno.h>
 #include <ctype.h>
+#else
+#include "bg_lib.h"
+#endif
 
 #define YYMALLOC	rb_parser_malloc
 #define YYREALLOC	rb_parser_realloc
@@ -570,6 +575,8 @@ typedef YYTYPE_INT16 yytype_int16;
 typedef short int yytype_int16;
 #endif
 
+
+
 #ifndef YYSIZE_T
 # ifdef __SIZE_TYPE__
 #  define YYSIZE_T __SIZE_TYPE__
@@ -577,7 +584,9 @@ typedef short int yytype_int16;
 #  define YYSIZE_T size_t
 # elif ! defined YYSIZE_T && (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
+#ifndef Q3_VM
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
+#endif
 #  define YYSIZE_T size_t
 # else
 #  define YYSIZE_T unsigned int
@@ -589,7 +598,9 @@ typedef short int yytype_int16;
 #ifndef YY_
 # if YYENABLE_NLS
 #  if ENABLE_NLS
+#ifndef Q3_VM
 #   include <libintl.h> /* INFRINGES ON USER NAME SPACE */
+#endif
 #   define YY_(msgid) dgettext ("bison-runtime", msgid)
 #  endif
 # endif
@@ -632,17 +643,23 @@ YYID (yyi)
 #   ifdef __GNUC__
 #    define YYSTACK_ALLOC __builtin_alloca
 #   elif defined __BUILTIN_VA_ARG_INCR
+#ifndef Q3_VM
 #    include <alloca.h> /* INFRINGES ON USER NAME SPACE */
+#endif
 #   elif defined _AIX
 #    define YYSTACK_ALLOC __alloca
 #   elif defined _MSC_VER
+#ifndef Q3_VM
 #    include <malloc.h> /* INFRINGES ON USER NAME SPACE */
+#endif
 #    define alloca _alloca
 #   else
 #    define YYSTACK_ALLOC alloca
 #    if ! defined _ALLOCA_H && ! defined _STDLIB_H && (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
+#ifndef Q3_VM
 #     include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
+#endif
 #     ifndef _STDLIB_H
 #      define _STDLIB_H 1
 #     endif
@@ -670,7 +687,9 @@ YYID (yyi)
 #  if (defined __cplusplus && ! defined _STDLIB_H \
        && ! ((defined YYMALLOC || defined malloc) \
 	     && (defined YYFREE || defined free)))
+#ifndef Q3_VM
 #   include <stdlib.h> /* INFRINGES ON USER NAME SPACE */
+#endif
 #   ifndef _STDLIB_H
 #    define _STDLIB_H 1
 #   endif
@@ -3735,7 +3754,9 @@ while (YYID (0))
 #if YYDEBUG
 
 # ifndef YYFPRINTF
+#ifndef Q3_VM
 #  include <stdio.h> /* INFRINGES ON USER NAME SPACE */
+#endif
 #  define YYFPRINTF fprintf
 # endif
 
