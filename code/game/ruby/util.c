@@ -931,6 +931,7 @@ static double private_mem[PRIVATE_mem], *pmem_next = private_mem;
 #ifndef Q3_VM
 #include "errno.h"
 #else
+#define Bad_float_h
 #include "q_errno.h"
 #endif
 
