@@ -52,6 +52,38 @@ $vm_ta_env = new cons(%vm_ta_env_hash);
 
 # the file with vmMain function MUST be the first one of the list
 @FILES = qw(
+  g_main.c
+  ai_chat.c
+  ai_cmd.c
+  ai_dmnet.c
+  ai_dmq3.c
+  ai_main.c
+  ai_team.c
+  ai_vcmd.c
+  bg_misc.c
+  bg_pmove.c
+  bg_slidemove.c
+  g_active.c
+  g_arenas.c
+  g_bot.c
+  g_client.c
+  g_cmds.c
+  g_combat.c
+  g_items.c
+  g_mem.c
+  g_misc.c
+  g_missile.c
+  g_mover.c
+  g_session.c
+  g_spawn.c
+  g_svcmds.c
+  g_target.c
+  g_team.c
+  g_trigger.c
+  g_utils.c
+  g_weapon.c
+  q_math.c
+  q_shared.c
 ruby/array.c
 ruby/bignum.c
 ruby/class.c
@@ -91,38 +123,6 @@ ruby/time.c
 ruby/util.c
 ruby/variable.c
 ruby/version.c
-  g_main.c
-  ai_chat.c
-  ai_cmd.c
-  ai_dmnet.c
-  ai_dmq3.c
-  ai_main.c
-  ai_team.c
-  ai_vcmd.c
-  bg_misc.c
-  bg_pmove.c
-  bg_slidemove.c
-  g_active.c
-  g_arenas.c
-  g_bot.c
-  g_client.c
-  g_cmds.c
-  g_combat.c
-  g_items.c
-  g_mem.c
-  g_misc.c
-  g_missile.c
-  g_mover.c
-  g_session.c
-  g_spawn.c
-  g_svcmds.c
-  g_target.c
-  g_team.c
-  g_trigger.c
-  g_utils.c
-  g_weapon.c
-  q_math.c
-  q_shared.c
   );
 $FILESREF = \@FILES;
 
