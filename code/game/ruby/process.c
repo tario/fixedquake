@@ -14,6 +14,8 @@
 
 #include "ruby.h"
 #include "rubysig.h"
+
+#ifndef Q3_VM
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>
@@ -30,6 +32,67 @@
 #include <time.h>
 #include <ctype.h>
 
+#else
+
+#include "bg_lib.h"
+#include "q_errno.h"
+#include "q_file.h"
+#include "q_process.h"
+#define NULL 0
+
+#define SIGHUP		 1
+#define SIGINT		 2
+#define SIGQUIT		 3
+#define SIGILL		 4
+#define SIGTRAP		 5
+#define SIGABRT		 6
+#define SIGIOT		 6
+#define SIGBUS		 7
+#define SIGFPE		 8
+#define SIGKILL		 9
+#define SIGUSR1		10
+#define SIGSEGV		11
+#define SIGUSR2		12
+#define SIGPIPE		13
+#define SIGALRM		14
+#define SIGTERM		15
+#define SIGSTKFLT	16
+#define SIGCHLD		17
+#define SIGCONT		18
+#define SIGSTOP		19
+#define SIGTSTP		20
+#define SIGTTIN		21
+#define SIGTTOU		22
+#define SIGURG		23
+#define SIGXCPU		24
+#define SIGXFSZ		25
+#define SIGVTALRM	26
+#define SIGPROF		27
+#define SIGWINCH	28
+#define SIGIO		29
+#define SIGPOLL		SIGIO
+/*
+#define SIGLOST		29
+*/
+#define SIGPWR		30
+#define SIGSYS		31
+#define	SIGUNUSED	31
+
+/* These should not be considered constants from userland.  */
+#define SIGRTMIN	32
+#ifndef SIGRTMAX
+#define SIGRTMAX	_NSIG
+#endif
+
+
+#define SIG_ERR	((__sighandler_t) -1)		/* Error return.  */
+#define SIG_DFL	((__sighandler_t) 0)		/* Default action.  */
+#define SIG_IGN	((__sighandler_t) 1)		/* Ignore signal.  */
+
+typedef void (*__sighandler_t) (int);
+
+#endif
+
 #ifndef EXIT_SUCCESS
 #define EXIT_SUCCESS 0
 #endif
@@ -39,17 +102,24 @@
 
 struct timeval rb_time_interval _((VALUE));
 
+#ifndef Q3_VM
+
 #ifdef HAVE_SYS_WAIT_H
 # include <sys/wait.h>
 #endif
 #ifdef HAVE_SYS_RESOURCE_H
 # include <sys/resource.h>
 #endif
+
+#endif
+
 #include "st.h"
 
 #ifdef __EMX__
 #undef HAVE_GETPGRP
 #endif
+
+#ifndef Q3_VM
 
 #ifdef HAVE_SYS_TIMES_H
 #include <sys/times.h>
@@ -57,6 +127,8 @@ struct timeval rb_time_interval _((VALUE));
 
 #ifdef HAVE_GRP_H
 #include <grp.h>
+#endif
+
 #endif
 
 #if defined(HAVE_TIMES) || defined(_WIN32)
