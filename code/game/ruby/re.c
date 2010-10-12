@@ -11,9 +11,13 @@
 
 #include "ruby.h"
 #include "re.h"
+
+#ifndef Q3_VM
 #include <ctype.h>
+#endif
 
 VALUE rb_eRegexpError;
+#define NULL 0
 
 #define BEG(no) regs->beg[no]
 #define END(no) regs->end[no]
