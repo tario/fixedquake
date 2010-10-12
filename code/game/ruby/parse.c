@@ -8714,7 +8714,7 @@ rb_compile_file(f, file, start)
     return yycompile(f, start);
 }
 
-static inline int
+Q_STATIC Q_INLINE int
 nextc()
 {
     int c;
