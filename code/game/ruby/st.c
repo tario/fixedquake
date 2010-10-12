@@ -4,11 +4,22 @@
 
 #include "config.h"
 #include "defines.h"
+
+#ifndef Q3_VM
+
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
 #include <string.h>
+
+#else
+
+#include "bg_lib.h"
+
+#endif
+
+
 #include "st.h"
 
 typedef struct st_table_entry st_table_entry;
