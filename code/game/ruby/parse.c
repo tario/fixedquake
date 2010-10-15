@@ -573,10 +573,14 @@ typedef signed char yytype_int8;
 typedef short int yytype_int8;
 #endif
 
+// HACK: quakeruby (16 bit initialized data not supported)
+#define  YYTYPE_UINT16 unsigned int
+#define  YYTYPE_INT16 int
+
 #ifdef YYTYPE_UINT16
 typedef YYTYPE_UINT16 yytype_uint16;
 #else
-typedef unsigned short int yytype_uint16;
+/typedef unsigned short int yytype_uint16;
 #endif
 
 #ifdef YYTYPE_INT16
