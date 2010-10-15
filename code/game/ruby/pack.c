@@ -733,7 +733,9 @@ pack_pack(ary, fmt)
 
 	  case 'n':		/* unsigned short (network byte-order)  */
 	    while (len-- > 0) {
-		unsigned short s;
+		// FIXME: quakeruby
+//		unsigned short s;
+		short s;		    
 
 		from = NEXTFROM;
 		s = num2i32(from);
@@ -755,7 +757,9 @@ pack_pack(ary, fmt)
 
 	  case 'v':		/* unsigned short (VAX byte-order) */
 	    while (len-- > 0) {
-		unsigned short s;
+		// FIXME: quakeruby
+//		unsigned short s;
+		short s;		    
 
 		from = NEXTFROM;
 		s = num2i32(from);
