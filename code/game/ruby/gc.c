@@ -361,7 +361,7 @@ typedef struct RVALUE {
 #pragma pack(pop)
 #endif
 
-static RVALUE *freelist = 0;
+static RVALUE *gc_freelist = 0;
 static RVALUE *deferred_final_list = 0;
 
 #define HEAPS_INCREMENT 10
@@ -430,8 +430,8 @@ add_heap()
 
     while (p < pend) {
 	p->as.free.flags = 0;
-	p->as.free.next = freelist;
-	freelist = p;
+	p->as.free.next = gc_freelist;
+	gc_freelist = p;
 	p++;
     }
 }
@@ -451,10 +451,10 @@ rb_newobj()
     if (during_gc)
 	rb_bug("object allocation during garbage collection phase");
 
-    if (ruby_gc_stress || !freelist) garbage_collect();
+    if (ruby_gc_stress || !gc_freelist) garbage_collect();
 
-    obj = (VALUE)freelist;
-    freelist = freelist->as.free.next;
+    obj = (VALUE)gc_freelist;
+    gc_freelist = gc_freelist->as.free.next;
     MEMZERO((void*)obj, RVALUE, 1);
 #ifdef GC_DEBUG
     RANY(obj)->file = ruby_sourcefile;
@@ -1102,8 +1102,8 @@ add_freelist(p)
     RVALUE *p;
 {
     p->as.free.flags = 0;
-    p->as.free.next = freelist;
-    freelist = p;
+    p->as.free.next = gc_freelist;
+    gc_freelist = p;
 }
 
 static void
@@ -1177,12 +1177,12 @@ gc_sweep()
         st_foreach(source_filenames, sweep_source_filename, 0);
     }
 
-    freelist = 0;
+    gc_freelist = 0;
     final_list = deferred_final_list;
     deferred_final_list = 0;
     for (i = 0; i < heaps_used; i++) {
 	int n = 0;
-	RVALUE *free = freelist;
+	RVALUE *free = gc_freelist;
 	RVALUE *final = final_list;
 	int deferred;
 
@@ -1222,7 +1222,7 @@ gc_sweep()
 	    for (pp = final_list; pp != final; pp = pp->as.free.next) {
 		pp->as.free.flags |= FL_SINGLETON; /* freeing page mark */
 	    }
-	    freelist = free;	/* cancel this page from freelist */
+	    gc_freelist = free;	/* cancel this page from freelist */
 	}
 	else {
 	    freed += n;
@@ -1241,13 +1241,13 @@ gc_sweep()
     /* clear finalization list */
     if (final_list) {
 	deferred_final_list = final_list;
-	if (!freelist && !rb_thread_critical) {
+	if (!gc_freelist && !rb_thread_critical) {
 	    rb_gc_finalize_deferred();
 	}
 	else {
 	    rb_thread_pending = 1;
 	}
-	if (!freelist) {
+	if (!gc_freelist) {
 	    add_heap();
 	}
 	return;
@@ -1457,7 +1457,7 @@ garbage_collect()
     }
 #endif
     if (dont_gc || during_gc) {
-	if (!freelist) {
+	if (!gc_freelist) {
 	    add_heap();
 	}
 	return;
