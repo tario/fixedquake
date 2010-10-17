@@ -106,7 +106,9 @@ round(x)
 }
 #endif
 
-static ID id_coerce, id_to_i, id_eq;
+extern ID id_eq;
+
+static ID id_coerce, id_to_i;
 
 VALUE rb_cNumeric;
 VALUE rb_cFloat;

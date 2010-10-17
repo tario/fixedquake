@@ -15,6 +15,7 @@
 #include "util.h"
 
 extern ID id_cmp;
+extern ID id_eq;
 
 VALUE rb_mEnumerable;
 Q_STATIC ID id_each, id_eqq, id_size;
