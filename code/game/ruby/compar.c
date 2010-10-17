@@ -14,7 +14,7 @@
 
 VALUE rb_mComparable;
 
-static ID cmp;
+ static ID compar_cmp;
 
 int
 rb_cmpint(val, a, b)
@@ -56,7 +56,7 @@ static VALUE
 cmp_eq(a)
     VALUE *a;
 {
-    VALUE c = rb_funcall(a[0], cmp, 1, a[1]);
+    VALUE c = rb_funcall(a[0], compar_cmp, 1, a[1]);
 
     if (NIL_P(c)) return Qnil;
     if (rb_cmpint(c, a[0], a[1]) == 0) return Qtrue;
@@ -102,7 +102,7 @@ static VALUE
 cmp_gt(x, y)
     VALUE x, y;
 {
-    VALUE c = rb_funcall(x, cmp, 1, y);
+    VALUE c = rb_funcall(x, compar_cmp, 1, y);
 
     if (NIL_P(c)) return cmperr();
     if (rb_cmpint(c, x, y) > 0) return Qtrue;
@@ -121,7 +121,7 @@ static VALUE
 cmp_ge(x, y)
     VALUE x, y;
 {
-    VALUE c = rb_funcall(x, cmp, 1, y);
+    VALUE c = rb_funcall(x, compar_cmp, 1, y);
 
     if (NIL_P(c)) return cmperr();
     if (rb_cmpint(c, x, y) >= 0) return Qtrue;
@@ -140,7 +140,7 @@ static VALUE
 cmp_lt(x, y)
     VALUE x, y;
 {
-    VALUE c = rb_funcall(x, cmp, 1, y);
+    VALUE c = rb_funcall(x, compar_cmp, 1, y);
 
     if (NIL_P(c)) return cmperr();
     if (rb_cmpint(c, x, y) < 0) return Qtrue;
@@ -160,7 +160,7 @@ static VALUE
 cmp_le(x, y)
     VALUE x, y;
 {
-    VALUE c = rb_funcall(x, cmp, 1, y);
+    VALUE c = rb_funcall(x, compar_cmp, 1, y);
 
     if (NIL_P(c)) return cmperr();
     if (rb_cmpint(c, x, y) <= 0) return Qtrue;
@@ -239,5 +239,5 @@ Init_Comparable()
     rb_define_method(rb_mComparable, "<=", cmp_le, 1);
     rb_define_method(rb_mComparable, "between?", cmp_between, 2);
 
-    cmp = rb_intern("<=>");
+    compar_cmp = rb_intern("<=>");
 }
