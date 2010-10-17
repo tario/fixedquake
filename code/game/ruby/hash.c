@@ -1295,7 +1295,7 @@ rb_hash_sort(hash)
 }
 
 static int
-inspect_i(key, value, str)
+hash_inspect_i(key, value, str)
     VALUE key, value, str;
 {
     VALUE str2;
@@ -1322,7 +1322,7 @@ inspect_hash(hash)
     VALUE str;
 
     str = rb_str_buf_new2("{");
-    rb_hash_foreach(hash, inspect_i, str);
+    rb_hash_foreach(hash, hash_inspect_i, str);
     rb_str_buf_cat2(str, "}");
     OBJ_INFECT(str, hash);
 

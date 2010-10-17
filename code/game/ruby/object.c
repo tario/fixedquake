@@ -341,7 +341,7 @@ rb_inspect(obj)
 }
 
 static int
-inspect_i(id, value, str)
+object_inspect_i(id, value, str)
     ID id;
     VALUE value;
     VALUE str;
@@ -373,7 +373,7 @@ static VALUE
 inspect_obj(obj, str)
     VALUE obj, str;
 {
-    st_foreach_safe(ROBJECT(obj)->iv_tbl, inspect_i, str);
+    st_foreach_safe(ROBJECT(obj)->iv_tbl, object_inspect_i, str);
     rb_str_cat2(str, ">");
     RSTRING(str)->ptr[0] = '#';
     OBJ_INFECT(str, obj);
