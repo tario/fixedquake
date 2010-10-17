@@ -1628,7 +1628,7 @@ hash_i(key, val, hval)
 
 static VALUE recursive_hash _((VALUE, VALUE, int));
 static VALUE
-recursive_hash(hash, dummy, recur)
+hash_recursive_hash(hash, dummy, recur)
     VALUE hash;
     VALUE dummy;
     int recur;
@@ -1655,7 +1655,7 @@ static VALUE
 rb_hash_hash(hash)
     VALUE hash;
 {
-    return rb_exec_recursive(recursive_hash, hash, 0);
+    return rb_exec_recursive(hash_recursive_hash, hash, 0);
 }
 
 

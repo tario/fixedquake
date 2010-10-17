@@ -2701,7 +2701,7 @@ rb_ary_eql(ary1, ary2)
 
 static VALUE recursive_hash _((VALUE, VALUE, int));
 static VALUE
-recursive_hash(ary, dummy, recur)
+array_recursive_hash(ary, dummy, recur)
     VALUE ary;
     VALUE dummy;
     int recur;
@@ -2734,7 +2734,7 @@ static VALUE
 rb_ary_hash(ary)
     VALUE ary;
 {
-    return rb_exec_recursive(recursive_hash, ary, 0);
+    return rb_exec_recursive(array_recursive_hash, ary, 0);
 }
 
 /*
