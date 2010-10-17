@@ -1546,7 +1546,7 @@ eql_i(key, val1, data)
 
 static VALUE recursive_eql _((VALUE, VALUE, int));
 static VALUE
-recursive_eql(hash, dt, recur)
+hash_recursive_eql(hash, dt, recur)
     VALUE hash;
     VALUE dt;
     int recur;
@@ -1585,7 +1585,7 @@ hash_equal(hash1, hash2, eql)
 
     data.tbl = RHASH(hash2)->tbl;
     data.eql = eql;
-    return rb_exec_recursive(recursive_eql, hash1, (VALUE)&data);
+    return rb_exec_recursive(hash_recursive_eql, hash1, (VALUE)&data);
 }
 
 /*

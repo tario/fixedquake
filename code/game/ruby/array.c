@@ -2667,7 +2667,7 @@ rb_ary_equal(ary1, ary2)
 
 static VALUE recursive_eql _((VALUE, VALUE, int));
 static VALUE
-recursive_eql(ary1, ary2, recur)
+array_recursive_eql(ary1, ary2, recur)
     VALUE ary1, ary2;
     int recur;
 {
@@ -2696,7 +2696,7 @@ rb_ary_eql(ary1, ary2)
     if (ary1 == ary2) return Qtrue;
     if (TYPE(ary2) != T_ARRAY) return Qfalse;
     if (RARRAY(ary1)->len != RARRAY(ary2)->len) return Qfalse;
-    return rb_exec_recursive(recursive_eql, ary1, ary2);
+    return rb_exec_recursive(array_recursive_eql, ary1, ary2);
 }
 
 static VALUE recursive_hash _((VALUE, VALUE, int));
