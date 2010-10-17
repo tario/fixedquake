@@ -1200,7 +1200,7 @@ rb_hash_each_pair(hash)
 }
 
 static int
-each_i(key, value)
+hash_each_i(key, value)
     VALUE key, value;
 {
     if (key == Qundef) return ST_CONTINUE;
@@ -1233,7 +1233,7 @@ rb_hash_each(hash)
     VALUE hash;
 {
     RETURN_ENUMERATOR(hash, 0, 0);
-    rb_hash_foreach(hash, each_i, 0);
+    rb_hash_foreach(hash, hash_each_i, 0);
     return hash;
 }
 

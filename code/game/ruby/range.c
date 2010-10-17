@@ -404,7 +404,7 @@ range_step(argc, argv, range)
 }
 
 static void
-each_i(v, arg)
+range_each_i(v, arg)
     VALUE v;
     void *arg;
 {
@@ -462,7 +462,7 @@ range_each(range)
 		   (VALUE)iter);
     }
     else {
-	range_each_func(range, each_i, beg, end, NULL);
+	range_each_func(range, range_each_i, beg, end, NULL);
     }
     return range;
 }
