@@ -18,7 +18,7 @@
 #include  "q_fake.h"
 
 VALUE rb_cArray;
-static ID id_cmp;
+Q_STATIC ID id_cmp;
 
 #define ARY_DEFAULT_SIZE 16
 #define ARY_MAX_SIZE (LONG_MAX / sizeof(VALUE))

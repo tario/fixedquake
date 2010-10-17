@@ -14,8 +14,10 @@
 #include "node.h"
 #include "util.h"
 
+extern ID id_cmp;
+
 VALUE rb_mEnumerable;
-static ID id_each, id_eqq, id_cmp, id_size;
+Q_STATIC ID id_each, id_eqq, id_size;
 
 struct iter_method_arg {
     VALUE obj;

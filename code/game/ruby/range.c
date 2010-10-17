@@ -13,7 +13,10 @@
 #include "ruby.h"
 
 VALUE rb_cRange;
-static ID id_cmp, id_succ, id_beg, id_end, id_excl;
+
+extern ID id_cmp;
+
+Q_STATIC ID id_succ, id_beg, id_end, id_excl;
 
 #ifdef Q3_VM
 #define NULL 0
